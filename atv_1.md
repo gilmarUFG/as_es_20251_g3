@@ -18,7 +18,7 @@
 |RNF05|O sistema deve suportar pelo menos 500 usuários simultâneos sem degradação perceptível do desempenho.|
 
 ### Relação entre Requisitos Funcionais e Não Funcionais
-|Id|Descrição|
+|RF|RNF relacionado|
 |---|---|
 |RF01|RNF03 (armazenamento seguro de senhas), RNF04 (compatibilidade com navegadores)|
 |RF02|RNF01 (tempo de resposta rápido), RNF03 (armazenamento seguro de senhas)|
