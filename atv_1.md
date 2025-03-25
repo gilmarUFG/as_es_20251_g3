@@ -25,3 +25,10 @@
 |RF03|RNF05 (suporte a múltiplos usuários), RNF01 (tempo de resposta rápido)|
 |RF04|RNF05 (suporte a múltiplos usuários), RNF04 (compatibilidade com navegadores)|
 |RF05|RNF01 (tempo de resposta rápido), RNF02 (disponibilidade do sistema)|
+
+### Estratégia para atendimento dos requisitos de qualidade
+|Id|Descrição|Estratégia
+|---|---|---|
+|RQ01|Segurança|Utilização de token para autenticação do usuário.|
+|RQ02|Proteção|Utilização de Middleware para proteção de dados a nível de usuário.|
+|RQ03|Usabilidade|Realizar testes com usuários para garantir que o fluxo de cadastro seja rápido e intuitivo.|
