@@ -1,0 +1,41 @@
+@startuml
+skinparam componentStyle rectangle
+skinparam monochrome true
+
+actor Usuario
+
+package "Camada de Apresentação" {
+  component Frontend
+}
+
+package "API Gateway" {
+  component APIGateway
+}
+
+package "Microsserviços" {
+  component CalculoConsumo as "Cadastro e Calculo de Consumo (RF01)"
+  component Simulacao as "Simulação e Recomendação (RF02)"
+  component Interface as "Visualização Estatísticas (RF03)"
+  component Relatorios as "Relatórios Semanais (RF04)"
+  component Assistentes as "Integração com Assistentes (RF05)"
+}
+
+database PostgreSQL as PG
+database MongoDB as MG
+
+' Fluxo de interações
+Usuario --> Frontend : acessa
+Frontend --> APIGateway
+
+APIGateway --> CalculoConsumo
+APIGateway --> Simulacao
+APIGateway --> Interface
+APIGateway --> Relatorios
+APIGateway --> Assistentes
+
+CalculoConsumo --> PG
+Relatorios --> PG
+Simulacao --> MG
+Assistentes --> MG
+
+@enduml
