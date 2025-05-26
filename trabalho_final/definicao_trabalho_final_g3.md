@@ -124,7 +124,7 @@ O sistema adotará arquitetura de microsserviços com os seguintes módulos prin
 - Geração de Relatórios e Análise (RF04)
 - Integração com Assistentes Pessoais (RF05)
 
-![Diagrama da arquitetura](imagens/diagrama modelo arquitetural.jpeg)
+![Diagrama da arquitetura](imagens/diagrama_modelo_arquitetural.jpeg)
 ---
 
 ## Modelo de Interfaces Gráficas
