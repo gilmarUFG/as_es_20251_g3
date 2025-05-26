@@ -1,41 +1,84 @@
 @startuml
+top to bottom direction
 skinparam componentStyle rectangle
 skinparam monochrome true
 
-actor Usuario
+actor Usuario as "Usuário Final"
 
 package "Camada de Apresentação" {
-  component Frontend
+  component Frontend as "Interface Gráfica Multiplataforma\n(RF03)"
 }
 
 package "API Gateway" {
-  component APIGateway
+  component APIGateway as "Gateway de API"
 }
 
 package "Microsserviços" {
-  component CalculoConsumo as "Cadastro e Calculo de Consumo (RF01)"
-  component Simulacao as "Simulação e Recomendação (RF02)"
-  component Interface as "Visualização Estatísticas (RF03)"
-  component Relatorios as "Relatórios Semanais (RF04)"
-  component Assistentes as "Integração com Assistentes (RF05)"
+
+  package "Cadastro e Cálculo de Consumo (RF01)" {
+    component CalculoAPI as "ConsumoController"
+    component CalculoService as "ConsumoService"
+    component AparelhoService as "AparelhoService"
+  }
+
+  package "Simulação e Recomendações (RF02)" {
+    component SimulacaoAPI as "SimulacaoController"
+    component SimuladorHabitos as "SimuladorHabitos"
+    component MotorRegras as "Motor de Regras"
+  }
+
+  package "Visualização de Estatísticas (RF03)" {
+    component EstatisticasAPI as "EstatisticasController"
+    component EstatisticasService as "EstatisticasService"
+    component GraficosBuilder as "GraficosBuilder"
+  }
+
+  package "Relatórios Semanais (RF04)" {
+    component RelatoriosAPI as "RelatoriosController"
+    component RelatorioPDF as "GeradorPDF"
+    component Agendador as "Agendador de Tarefas"
+  }
+
+  package "Integração com Assistentes (RF05)" {
+    component AssistenteAPI as "AssistenteController"
+    component ComandoVozService as "ComandoVozService"
+    component DispositivoService as "DispositivoService"
+  }
+
 }
 
 database PostgreSQL as PG
 database MongoDB as MG
 
-' Fluxo de interações
-Usuario --> Frontend : acessa
+Usuario --> Frontend : acessa via app
 Frontend --> APIGateway
 
-APIGateway --> CalculoConsumo
-APIGateway --> Simulacao
-APIGateway --> Interface
-APIGateway --> Relatorios
-APIGateway --> Assistentes
+APIGateway --> CalculoAPI
+APIGateway --> SimulacaoAPI
+APIGateway --> EstatisticasAPI
+APIGateway --> RelatoriosAPI
+APIGateway --> AssistenteAPI
 
-CalculoConsumo --> PG
-Relatorios --> PG
-Simulacao --> MG
-Assistentes --> MG
+CalculoAPI --> CalculoService
+CalculoAPI --> AparelhoService
+CalculoService --> PG
+
+SimulacaoAPI --> SimuladorHabitos
+SimuladorHabitos --> MotorRegras
+MotorRegras --> MG
+
+EstatisticasAPI --> EstatisticasService
+EstatisticasService --> GraficosBuilder
+EstatisticasService --> PG
+EstatisticasService --> MG
+
+RelatoriosAPI --> RelatorioPDF
+RelatoriosAPI --> Agendador
+RelatorioPDF --> PG
+
+AssistenteAPI --> ComandoVozService
+AssistenteAPI --> DispositivoService
+ComandoVozService --> MG
+DispositivoService --> MG
 
 @enduml
