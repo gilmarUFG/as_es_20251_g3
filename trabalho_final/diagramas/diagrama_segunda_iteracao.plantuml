@@ -1,0 +1,44 @@
+@startuml
+skinparam style strictuml
+skinparam componentStyle rectangle
+
+title Arquitetura - Sistema de Gestão de Energia Inteligente
+
+package "Frontend" {
+  [Interface Web] as UI
+}
+
+[API Gateway] as Gateway
+
+package "Backend (Microsserviços)" {
+  [Módulo de Projeções e IA] as IA
+  [Módulo de Notificações] as Notifier
+  [Módulo de Integração com Assistentes] as Assistente
+  [Módulo de Integração com Sistemas Externos] as Integrador
+  [Módulo de Projeção de Consumo Mensal] as Projecao
+  [Módulo de Medição de Alta Precisão] as Precisao
+}
+
+package "Banco de Dados" {
+  [Banco de Dados SQL/NoSQL] as DB
+}
+
+package "Sensores/Dispositivos" {
+  [Sensores de Energia (MQTT/HTTP)] as Sensores
+  [Dispositivos Inteligentes] as Dispositivos
+}
+
+' Fluxo de chamadas
+UI --> Gateway : requisições de usuário
+
+Gateway --> IA : dados históricos para recomendações
+Gateway --> Notifier : eventos de notificação
+Gateway --> Assistente : comandos por voz
+Gateway --> Integrador : integração com sistemas externos
+Gateway --> Projecao : dados para estimar consumo mensal
+Gateway --> Precisao : dados de sensores de alta precisão
+Gateway --> DB : leitura/escrita de dados
+Gateway --> Dispositivos : acionamento de dispositivos
+Sensores --> Precisao : medições detalhadas
+Sensores --> Gateway : medições em tempo real
+@enduml
