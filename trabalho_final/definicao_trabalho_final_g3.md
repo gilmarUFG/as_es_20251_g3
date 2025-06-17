@@ -48,6 +48,7 @@ Arthur Felipe Nascimento, Janderson Oliveira, Luis Felipe Ferreira, Phablo Tavar
 | RF07 | [HU-007] Notificar o usuário durante períodos de alta no preço da energia. |
 | RF08 | [HU-008] Exibir projeção de consumo mensal estimado com base no uso atual. |
 | RF09 | [HU-009] Utilizar equipamentos de medição mais precisos para dispositivos de alto consumo. |
+| RF10 | [HU-010] Configurar e ativar o modo de economia de energia nos dispositivos compatíveis. |
 
 ### Requisitos Não Funcionais
 
@@ -98,6 +99,7 @@ Arthur Felipe Nascimento, Janderson Oliveira, Luis Felipe Ferreira, Phablo Tavar
 | RF07                | RNF02, RNF08                         |
 | RF08                | RNF02, RNF09                         |
 | RF09                | RNF10                                |
+| RF10                | RNF10                                |
 
 ### Requisitos Funcionais × Regras de Negócio
 
@@ -112,6 +114,7 @@ Arthur Felipe Nascimento, Janderson Oliveira, Luis Felipe Ferreira, Phablo Tavar
 | RF07                | RN07                                |
 | RF08                | RN08                                |
 | RF09                | RN09                                |
+| RF10                | RN09                                |
 
 ### Regras de Negócio × Requisitos Não Funcionais
 
@@ -142,7 +145,6 @@ Arthur Felipe Nascimento, Janderson Oliveira, Luis Felipe Ferreira, Phablo Tavar
 | RN08      | HU-008        |
 | RN09      | HU-009        |
 | RN10      | HU-006        |
-
 ---
 
 ## Modelo Arquitetural
@@ -157,6 +159,7 @@ O sistema adotará o padrão de arquitetura de microsserviços com os seguintes 
 - Integração com Sistemas Externos e Equipamentos (RF06, RF09)
 - Notificações e Alertas Inteligentes (RF07)
 - Projeção de Consumo e Planejamento Energético (RF08)
+- Modo economia de energia (RF10)
 
 **Diagrama - Primeira Iteração**
 
@@ -178,6 +181,7 @@ O sistema adotará o padrão de arquitetura de microsserviços com os seguintes 
 - Tela de integração com sistemas externos
 - Tela de alertas e notificações
 - Tela de projeção de consumo mensal
+- Tela de configuração e ativação do modo de economia de energia
 
 ---
 
