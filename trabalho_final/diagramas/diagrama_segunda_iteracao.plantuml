@@ -1,44 +1,84 @@
 @startuml
-skinparam style strictuml
-skinparam componentStyle rectangle
-
 title Arquitetura - Sistema de Gestão de Energia Inteligente
+skinparam defaultTextAlignment center
 
 package "Frontend" {
-  [Interface Web] as UI
+  [Interface Web]
 }
 
-[API Gateway] as Gateway
+package "Api Gateway" {
+  [API Gateway]
+}
 
-package "Backend (Microsserviços)" {
-  [Módulo de Projeções e IA] as IA
-  [Módulo de Notificações] as Notifier
-  [Módulo de Integração com Assistentes] as Assistente
-  [Módulo de Integração com Sistemas Externos] as Integrador
-  [Módulo de Projeção de Consumo Mensal] as Projecao
-  [Módulo de Medição de Alta Precisão] as Precisao
+' Backend (Microserviços)
+package "Backend (Microserviços)" {
+  
+  package "Módulo de Projeções e IA" {
+    [IA Engine]
+    [Treinamento de Perfil]
+  }
+
+  package "Módulo de Notificações" {
+    [Gerador de Alertas]
+    [Canal de Envio]
+  }
+
+  package "Módulo de Integração com Assistentes" {
+    [Processador de Voz]
+    [Conversor de Comandos]
+  }
+
+  package "Módulo de Integração com Sistemas Externos" {
+    [Adaptador MQTT]
+    [Adaptador HTTP]
+  }
+
+  package "Módulo de Projeção de Consumo Mensal" {
+    [Estimador de Consumo]
+  }
+
+  package "Módulo de Medição de Alta Precisão" {
+    [Coletor de Dados]
+    [Filtro de Ruído]
+  }
+
+  package "Módulo de Economia de Energia" {
+    [Regras de Economia]
+    [Aplicador de Configurações]
+  }
 }
 
 package "Banco de Dados" {
-  [Banco de Dados SQL/NoSQL] as DB
+  [Histórico de Consumo]
+  [Configurações de Dispositivos]
+  [Projeções e IA]
 }
 
 package "Sensores/Dispositivos" {
-  [Sensores de Energia (MQTT/HTTP)] as Sensores
-  [Dispositivos Inteligentes] as Dispositivos
+  [Dispositivos Inteligentes]
+  [Sensores de Energia]
 }
 
-' Fluxo de chamadas
-UI --> Gateway : requisições de usuário
+' Conexões principais (mantendo a lógica atual)
+[Interface Web] --> [API Gateway] : requisições de usuário
 
-Gateway --> IA : dados históricos para recomendações
-Gateway --> Notifier : eventos de notificação
-Gateway --> Assistente : comandos por voz
-Gateway --> Integrador : integração com sistemas externos
-Gateway --> Projecao : dados para estimar consumo mensal
-Gateway --> Precisao : dados de sensores de alta precisão
-Gateway --> DB : leitura/escrita de dados
-Gateway --> Dispositivos : acionamento de dispositivos
-Sensores --> Precisao : medições detalhadas
-Sensores --> Gateway : medições em tempo real
+[API Gateway] --> [IA Engine] : dados históricos para recomendações
+[API Gateway] --> [Treinamento de Perfil] : atualizações de perfil
+[API Gateway] --> [Gerador de Alertas] : eventos de notificação
+[API Gateway] --> [Canal de Envio] : disparo de mensagens
+[API Gateway] --> [Conversor de Comandos] : comandos por voz
+[Conversor de Comandos] --> [Processador de Voz] : interpretação
+[API Gateway] --> [Adaptador MQTT] : integração MQTT
+[API Gateway] --> [Adaptador HTTP] : integração HTTP
+[API Gateway] --> [Estimador de Consumo] : consumo estimado
+[API Gateway] --> [Coletor de Dados] : dados de sensores
+[Coletor de Dados] --> [Filtro de Ruído] : limpeza de dados
+[API Gateway] --> [Regras de Economia] : regras de economia
+[API Gateway] --> [Aplicador de Configurações] : aplicar perfis
+[API Gateway] --> [Histórico de Consumo] : explorar consumo
+[API Gateway] --> [Configurações de Dispositivos] : aplicar configurações
+[API Gateway] --> [Projeções e IA] : dados para IA
+[API Gateway] --> [Dispositivos Inteligentes] : acionamento
+[API Gateway] --> [Sensores de Energia] : medições em tempo real
+
 @enduml
